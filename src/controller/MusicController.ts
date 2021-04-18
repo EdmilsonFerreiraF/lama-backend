@@ -41,14 +41,6 @@ export class MusicController {
          })
 
          var upload = multer({ storage: storage })
-         
-         // console.log("req", req)
-         console.log("req.file", req.file)
-         console.log("req.body", req.body)
-         console.log("req.body.title", req.body.title)
-         console.log("file", file)
-
-         // console.log("upload", upload)
 
          const result = await musicBusiness.createMusic(
             music,
@@ -56,8 +48,6 @@ export class MusicController {
          );
 
          return res.status(200).send(music.file);
-   
-         // res.status(201).send({ message: "Successfully created" });
       } catch (error) {
          const { statusCode, message } = error;
 
@@ -78,7 +68,6 @@ export class MusicController {
          res.send(result)
       } catch (error) {
          const { statusCode, message } = error;
-         console.log(error.message || error.sqlMessage)
          res.status(statusCode || 400).send({ message });
       };
    }
@@ -98,7 +87,6 @@ export class MusicController {
          res.send(result)
       } catch (error) {
          const { statusCode, message } = error;
-         console.log(error.message || error.sqlMessage)
          res.status(statusCode || 400).send({ message });
       };
    };
@@ -108,8 +96,6 @@ export class MusicController {
          const { id } = req.params;
          const token = req.headers.authorization;
 
-         console.log("token - controller", token)
-         
          const result: any = await musicBusiness.getMusicDetailsById(
             id,
             token
@@ -118,7 +104,6 @@ export class MusicController {
          res.send(result)
       } catch (error) {
          const { statusCode, message } = error;
-         console.log(error.message || error.sqlMessage)
          res.status(statusCode || 400).send({ message });
       };
    };
