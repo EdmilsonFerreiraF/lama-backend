@@ -109,6 +109,27 @@ export class MusicController {
          res.status(statusCode || 400).send({ message });
       };
    };
+   
+   public async deleteMusicById(req: Request, res: Response) {
+      try {
+         const { id } = req.params;
+         const token = req.headers.authorization;
+
+         const input: any = {
+            id
+         }
+
+         const result: any = await musicBusiness.deleteMusicById(
+            input,
+            token
+         );
+
+         res.send(result)
+      } catch (error) {
+         const { statusCode, message } = error;
+         res.status(statusCode || 400).send({ message });
+      };
+   };
 };
 
 export default new MusicController();

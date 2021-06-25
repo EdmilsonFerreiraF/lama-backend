@@ -77,7 +77,7 @@ export class MusicDatabase extends BaseDatabase {
       try {
          const conn = await BaseDatabase.connection;
          const MusicModel = conn.model('musics2', this.blogSchema);
-         const music = await MusicModel.findOne({id}, 'file').exec();
+         const music = await MusicModel.findOne({ id }, 'file').exec();
 
          return this.toModel(music);
       } catch (error) {
@@ -89,7 +89,7 @@ export class MusicDatabase extends BaseDatabase {
       try {
          const conn = await BaseDatabase.connection;
          const MusicModel = conn.model('musics2', this.blogSchema);
-         const music = await MusicModel.findOne({"author": nickname, id}).exec();
+         const music = await MusicModel.findOne({"author": nickname, id}, 'id title author date genre album').exec();
 
          return this.toModel(music);
       } catch (error) {
@@ -104,6 +104,16 @@ export class MusicDatabase extends BaseDatabase {
          const music = await MusicModel.find({"author": nickname, "title": input.title}, 'id title author').exec();
 
          return music.map((music: Music) => this.toModel(music));
+      } catch (error) {
+         throw new Error(error.statusCode || error.message);
+      };
+   };
+
+   public async deleteMusicById(id: string, nickname: string): Promise<void> {
+      try {
+         const conn = await BaseDatabase.connection;
+         const MusicModel = conn.model('musics2', this.blogSchema);
+         await MusicModel.deleteOne({"author": nickname, id});
       } catch (error) {
          throw new Error(error.statusCode || error.message);
       };

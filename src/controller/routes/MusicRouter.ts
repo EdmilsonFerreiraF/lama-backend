@@ -12,4 +12,5 @@ musicRouter.post("/create", upload.single('file'), musicController.createMusic);
 musicRouter.get("/all", musicController.getAllMusics);
 musicRouter.get("/:id", musicController.getMusicById);
 musicRouter.get("/:id/details", musicController.getMusicDetailsById);
+musicRouter.delete("/:id", musicController.deleteMusicById);
 musicRouter.get("/title/:title", musicController.getMusicByName);

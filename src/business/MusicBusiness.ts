@@ -167,7 +167,27 @@ export class MusicBusiness {
          throw new CustomError(error.statusCode, error.message);
       };
    };
+   
+   public async deleteMusicById(
+      input: any,
+      token: string
+   ) {
+      try {
+         if (!input.id) {
+            throw new CustomError(422, "Missing input");
+         };
+                          
+         const isTokenValid = await this.tokenGenerator.verify(token);
+         
+         if (!isTokenValid) {
+            throw new CustomError(409, "Invalid token");
+         }
 
+         await this.musicDatabase.deleteMusicById(input.id, isTokenValid.nickname);
+      } catch (error) {
+         throw new CustomError(error.statusCode, error.message);
+      };
+   };
 };
 
 export default new MusicBusiness(new IdGenerator(), new MusicDatabase(), new TokenGenerator());
