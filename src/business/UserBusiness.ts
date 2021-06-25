@@ -30,7 +30,7 @@ export class UserBusiness {
          };
 
          if (input.email.indexOf("@") === -1) {
-            throw new CustomError(422, "All addresses must have an @");
+            throw new CustomError(422, "Invalid email address");
          };
 
          if (input.password.length < 6) {
