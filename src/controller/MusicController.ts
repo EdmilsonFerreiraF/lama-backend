@@ -1,28 +1,27 @@
 import { Request, Response } from "express";
-import { MusicBusiness } from "../business/MusicBusiness";
+
 import { IdGenerator } from "../business/services/idGenerator";
-import { HashGenerator } from "../business/services/hashGenerator";
-import { MusicDatabase } from "../data/MusicDatabase";
 import { TokenGenerator } from "../business/services/tokenGenerator";
-var multer = require('multer')
-import fs from 'fs';
-const getStat = require('util').promisify(fs.stat);
+
+import { MusicBusiness } from "../business/MusicBusiness";
+import { MusicDatabase } from "../data/MusicDatabase";
+import { CreateMusicInputDTO } from "../business/entities/music";
 
 const musicBusiness =
  new MusicBusiness(new IdGenerator(),
-                  new HashGenerator(),
                   new MusicDatabase(),
                   new TokenGenerator()
                   );
 
 export class MusicController {
-   public async createMusic(req: Request, res: Response) {
-      try {
+    public async createMusic(req: Request, res: Response) {
+       try {
          const { title, author, date, genre, album } = req.body;
+         
          const file = req.file
          const token = req.headers.authorization;
 
-         const music = {
+         const input: CreateMusicInputDTO = {
             title,
             author,
             date,
@@ -31,26 +30,14 @@ export class MusicController {
             album
          }
 
-         var storage = multer.diskStorage({
-               destination: function (req: Request, file: any, cb: any) {
-               cb(null, 'uploads')
-            },
-            filename: function (req: Request, file: any, cb: any) {
-               cb(null, Date.now() + '-' + file.originalname )
-            }
-         })
-
-         var upload = multer({ storage: storage })
-
-         const result = await musicBusiness.createMusic(
-            music,
+         await musicBusiness.createMusic(
+            input,
             token
          );
-
-         return res.status(200).send(music.file);
+         
+         res.status(201).send("Music created successfully");
       } catch (error) {
          const { statusCode, message } = error;
-
          res.status(statusCode || 400).send({ message });
       };
    };
@@ -59,8 +46,6 @@ export class MusicController {
       try {
          const token = req.headers.authorization;
 
-         console.log("token - controller", token)
-         
          const result: any = await musicBusiness.getAllMusics(
             token
          );
@@ -75,11 +60,24 @@ export class MusicController {
    public async getMusicById(req: Request, res: Response) {
       try {
          const { id } = req.params;
+
+         const result: any = await musicBusiness.getMusicById(
+            id
+         );
+
+         res.send(result.file.buffer)
+      } catch (error) {
+         const { statusCode, message } = error;
+         res.status(statusCode || 400).send({ message });
+      };
+   };
+      
+   public async getMusicDetailsById(req: Request, res: Response) {
+      try {
+         const { id } = req.params;
          const token = req.headers.authorization;
 
-         console.log("token - controller", token)
-         
-         const result: any = await musicBusiness.getMusicById(
+         const result: any = await musicBusiness.getMusicDetailsById(
             id,
             token
          );
@@ -91,13 +89,17 @@ export class MusicController {
       };
    };
    
-   public async getMusicDetailsById(req: Request, res: Response) {
+   public async getMusicByName(req: Request, res: Response) {
       try {
-         const { id } = req.params;
+         const { title } = req.params;
          const token = req.headers.authorization;
 
-         const result: any = await musicBusiness.getMusicDetailsById(
-            id,
+         const input = {
+            title
+         }
+
+         const result: any = await musicBusiness.getMusicByName(
+            input,
             token
          );
 

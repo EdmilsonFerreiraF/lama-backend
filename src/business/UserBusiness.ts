@@ -1,9 +1,12 @@
-import { CustomError } from "../errors/CustomError";
-import { User } from "../data/model/User";
-import { UserDatabase } from "../data/UserDatabase";
 import { HashGenerator } from "./services/hashGenerator";
 import { IdGenerator } from "./services/idGenerator";
 import { TokenGenerator } from "./services/tokenGenerator";
+
+import { User } from "../data/model/User";
+import { UserDatabase } from "../data/UserDatabase";
+
+import { CustomError } from "../errors/CustomError";
+import { LoginInputDTO, SignupInputDTO } from "./entities/user";
 
 export class UserBusiness {
    constructor(
@@ -14,37 +17,46 @@ export class UserBusiness {
    ){};
 
    public async signup(
-      name: string,
-      email: string,
-      nickname: string,
-      password: string
+      input: SignupInputDTO
    ) {
       try {
-         if (!name || !email || !nickname || !password) {
+         if (
+            !input.name ||
+            !input.email ||
+            !input.nickname ||
+            !input.password
+         ) {
             throw new CustomError(422, "Missing input");
          };
 
-         if (email.indexOf("@") === -1) {
+         if (input.email.indexOf("@") === -1) {
             throw new CustomError(422, "All addresses must have an @");
          };
 
-         if (password.length < 6) {
-            throw new CustomError(422, "Invalid password");
+         if (input.password.length < 6) {
+            throw new CustomError(422, "Password must be more or equal than 6 characters length");
          };
 
          const id = this.idGenerator.generate();
 
-         const cypherPassword = await this.hashGenerator.hash(password);
+         const cypherPassword = await this.hashGenerator.hash(input.password);
 
          await this.userDatabase.createUser(
-            new User(id, name, email, nickname, cypherPassword)
+            new User(
+               id,
+               input.name,
+               input.email,
+               input.nickname,
+               cypherPassword
+            )
          );
 
-         const accessToken = this.tokenGenerator.generate({
-            id
+         const token = this.tokenGenerator.generate({
+            id,
+            nickname: input.nickname
          });
 
-         return { accessToken };
+         return { token };
       } catch (error) {
          if (error.message.includes("email")) {
             throw new CustomError(409, "Email already in use");
@@ -54,20 +66,20 @@ export class UserBusiness {
       };
    };
 
-   public async login(emailOrNickname: string, password: string) {
+   public async login(input: LoginInputDTO) {
       try {
-         if (!emailOrNickname || !password) {
+         if (!input.email || !input.password) {
             throw new CustomError(422, "Missing input");
          };
 
-         const user = await this.userDatabase.getUserByEmail(emailOrNickname);
+         const user = await this.userDatabase.getUserByEmailOrNick(input);
 
          if (!user) {
             throw new CustomError(401, "Invalid credentials");
          };
 
          const isPasswordCorrect = await this.hashGenerator.compareHash(
-            password,
+            input.password,
             user.getPassword()
          );
 
@@ -75,11 +87,12 @@ export class UserBusiness {
             throw new CustomError(401, "Invalid credentials");
          };
 
-         const accessToken = this.tokenGenerator.generate({
-            id: user.getId()
+         const token = this.tokenGenerator.generate({
+            id: user.getId(),
+            nickname: user.getNickname()
          });
 
-         return { accessToken };
+         return { token };
       } catch (error) {
          throw new CustomError(error.statusCode, error.message);
       };

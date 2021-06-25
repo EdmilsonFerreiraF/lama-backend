@@ -1,23 +1,19 @@
 import dotenv from "dotenv";
-import Knex from "knex";
-import knex from "knex";
+import mongoose from "mongoose";
+const { MongoClient } = require("mongodb");
 
 dotenv.config();
 
 export default class BaseDatabase {
-   protected static connection: Knex = knex({
-      client: "mysql",
-      connection: {
-         host: process.env.DB_HOST,
-         port: Number(process.env.PORT || "3306"),
-         user: process.env.DB_USER,
-         password: process.env.DB_PASSWORD,
-         database: process.env.DB_NAME,
-         multipleStatements: true
-      }
-   });
+   protected static connection: any = 
+       mongoose.createConnection(`mongodb+srv://Edmilson:Z6cTrRWMQsECiHGc@${process.env.DB_CLUSTER}.mongodb.net/${process.env.DB_NAME}`,
+      { useNewUrlParser: true, useUnifiedTopology: true });
 
-   public static async destroyConnection(): Promise<void> {
-      await BaseDatabase.connection.destroy();
-   };
-};
+  protected static uri: any =
+  `mongodb+srv://Edmilson:Z6cTrRWMQsECiHGc@${process.env.DB_CLUSTER}.mongodb.net/${process.env.DB_NAME}`;
+
+  protected static client: any = new MongoClient(BaseDatabase.uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+}; 

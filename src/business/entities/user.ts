@@ -1,4 +1,4 @@
-export type authenticationData = {
+export type AuthenticationData = {
     id: string
 }
 
@@ -10,13 +10,14 @@ export interface User {
     password: string
 };
 
-export type signupInputDTO = {
+export type SignupInputDTO = {
     name: string,
     email: string,
+    nickname: string,
     password: string
 };
 
-export type loginInputDTO = {
+export type LoginInputDTO = {
     email: string,
     password: string
 };
