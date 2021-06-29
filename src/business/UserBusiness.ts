@@ -16,7 +16,7 @@ export class UserBusiness {
       private tokenGenerator: TokenGenerator
    ){};
 
-   public async signup(
+   public async createUser(
       input: SignupInputDTO
    ) {
       try {
@@ -58,21 +58,17 @@ export class UserBusiness {
 
          return { token };
       } catch (error) {
-         if (error.message.includes("email")) {
-            throw new CustomError(409, "Email already in use");
-         };
-
          throw new CustomError(error.statusCode, error.message);
       };
    };
 
-   public async login(input: LoginInputDTO) {
+   public async getUserByEmail(input: LoginInputDTO) {
       try {
          if (!input.email || !input.password) {
             throw new CustomError(422, "Missing input");
          };
 
-         const user = await this.userDatabase.getUserByEmailOrNick(input);
+         const user = await this.userDatabase.getUserByEmail(input);
 
          if (!user) {
             throw new CustomError(401, "Invalid credentials");

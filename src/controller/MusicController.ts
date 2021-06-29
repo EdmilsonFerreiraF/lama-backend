@@ -18,8 +18,8 @@ export class MusicController {
        try {
          const { title, author, date, genre, album } = req.body;
          
-         const file = req.file
-         const token = req.headers.authorization;
+         const file = req.file as File | undefined;
+         const token = req.headers.authorization as string;
 
          const input: CreateMusicInputDTO = {
             title,
@@ -44,7 +44,7 @@ export class MusicController {
 
    public async getAllMusics(req: Request, res: Response) {
       try {
-         const token = req.headers.authorization;
+         const token = req.headers.authorization as string;
 
          const result: any = await musicBusiness.getAllMusics(
             token
@@ -75,7 +75,7 @@ export class MusicController {
    public async getMusicDetailsById(req: Request, res: Response) {
       try {
          const { id } = req.params;
-         const token = req.headers.authorization;
+         const token = req.headers.authorization as string;
 
          const result: any = await musicBusiness.getMusicDetailsById(
             id,
@@ -92,9 +92,9 @@ export class MusicController {
    public async getMusicByName(req: Request, res: Response) {
       try {
          const { title } = req.params;
-         const token = req.headers.authorization;
+         const token = req.headers.authorization as string;
 
-         const input = {
+         const input: any = {
             title
          }
 
@@ -113,7 +113,7 @@ export class MusicController {
    public async deleteMusicById(req: Request, res: Response) {
       try {
          const { id } = req.params;
-         const token = req.headers.authorization;
+         const token: string = req.headers.authorization as string;
 
          const input: any = {
             id

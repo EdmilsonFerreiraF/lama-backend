@@ -4,14 +4,7 @@ export class Music {
     private title: string,
     private author: string,
     private date: Date,
-    private file: {
-      fieldname: String,
-      originalname: String,
-      encoding: String,
-      mimetype: String,
-      buffer: Buffer,
-      size: Number,
-  },
+    private file: File | undefined,
     private genre: string[],
     private album: string
   ) {};
@@ -28,14 +21,7 @@ export class Music {
     return this.author;
   };
 
-  public getFile(): {
-    fieldname: String,
-    originalname: String,
-    encoding: String,
-    mimetype: String,
-    buffer: Buffer,
-    size: Number 
-  }{
+  public getFile(): File | undefined {
     return this.file;
   };
 

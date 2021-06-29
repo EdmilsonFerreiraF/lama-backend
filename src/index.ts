@@ -8,7 +8,6 @@ const app: Express = express();
 
 app.use(express.json());
 app.use(cors());
-app.use(express.static('public'));
 
 app.use('/user', userRouter);
 app.use('/music', musicRouter);

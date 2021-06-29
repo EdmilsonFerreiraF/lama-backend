@@ -17,7 +17,7 @@ const userBusiness =
                   );
 
 export class UserController {
-   public async signup(req: Request, res: Response) {
+   public async createUser(req: Request, res: Response) {
       try {
          const { name, email, nickname, password } = req.body;
 
@@ -28,7 +28,7 @@ export class UserController {
             password
          }
 
-         const result = await userBusiness.signup(
+         const result = await userBusiness.createUser(
             input
          );
 
@@ -39,7 +39,7 @@ export class UserController {
       };
    };
 
-   public async login(req: Request, res: Response) {
+   public async getUserByEmail(req: Request, res: Response) {
       try {
          const { email, password } = req.body;
 
@@ -48,7 +48,7 @@ export class UserController {
             password
          }
 
-         const result = await userBusiness.login(input);
+         const result = await userBusiness.getUserByEmail(input);
 
          res.status(200).send(result);
       } catch (error) {

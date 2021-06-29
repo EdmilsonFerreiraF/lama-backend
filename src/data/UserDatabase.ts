@@ -11,7 +11,10 @@ export class UserDatabase extends BaseDatabase {
    protected blogSchema = new Schema({
       id: String,
       name: String,
-      email: String,
+      email: {
+         type: String,
+         unique: true
+       },
       nickname: String,
       password: String
    });
@@ -45,11 +48,11 @@ export class UserDatabase extends BaseDatabase {
 
             NewUser.save();
       } catch (error) {
-         throw new Error(error.sqlMessage || error.message);
+         throw new Error(error.statusCode);
       };
    };
    
-   public async getUserByEmailOrNick(input: LoginInputDTO): Promise<User> {
+   public async getUserByEmail(input: LoginInputDTO): Promise<User> {
       try {
          const conn = await BaseDatabase.connection;
          const UserModel = conn.model('users2', this.blogSchema);
@@ -57,7 +60,7 @@ export class UserDatabase extends BaseDatabase {
 
          return this.toModel(user);
       } catch (error) {
-         throw new Error(error.sqlMessage || error.message);
+         throw new Error(error.statusCode);
       };
    };
 
@@ -69,7 +72,7 @@ export class UserDatabase extends BaseDatabase {
 
          return this.toModel(user);
       } catch (error) {
-         throw new Error(error.sqlMessage || error.message);
+         throw new Error(error.statusCode);
       };
    };
 
@@ -83,7 +86,7 @@ export class UserDatabase extends BaseDatabase {
             return this.toModel(user);
          });
       } catch (error) {
-         throw new Error(error.sqlMessage || error.message);
+         throw new Error(error.statusCode);
       };
    };
 };
