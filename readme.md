@@ -1,14 +1,14 @@
 <h1 align="center">
-    <a href="https://pt-br.reactjs.org/">🔗 Music App</a> - Backend
+    🔗 Music App</a> - Backend
 </h1>
 <p align="center">🚀 An app with user authorization and authentication for create playlists, upload and listen songs</p>
 <img src="https://travis-ci.com/EdmilsonFerreiraF/Backend.svg?branch=main" />
 
-https://img.shields.io/github/issues/EdmilsonFerreiraF/lama-frontend
-https://img.shields.io/github/forks/EdmilsonFerreiraF/lama-frontend
-https://img.shields.io/github/stars/EdmilsonFerreiraF/lama-frontend
-https://img.shields.io/github/license/EdmilsonFerreiraF/lama-frontend
-https://img.shields.io/twitter/url?style=social
+<a href="https://github.com/EdmilsonFerreiraF/lama-backend/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/EdmilsonFerreiraF/lama-backend"></a>
+<a href="https://github.com/EdmilsonFerreiraF/lama-frontend/network"><img alt="GitHub forks" src="https://img.shields.io/github/forks/EdmilsonFerreiraF/lama-frontend"></a>
+<a href="https://github.com/EdmilsonFerreiraF/lama-frontend/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/EdmilsonFerreiraF/lama-frontend"></a>
+<a href="https://github.com/EdmilsonFerreiraF/lama-frontend"><img alt="GitHub license" src="https://img.shields.io/github/license/EdmilsonFerreiraF/lama-frontend"></a>
+<a href="https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2FEdmilsonFerreiraF%2Flama-frontend%2F"><img alt="Twitter" src="https://img.shields.io/twitter/url?style=social"></a>
 
 ### Features
 - :man: Register an account
