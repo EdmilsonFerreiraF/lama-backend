@@ -146,11 +146,11 @@ export class MusicBusiness {
    };
 
    public async getMusicByName(
-      input: any,
+      title: any,
       token: string
    ) {
       try {
-         if (!input.title) {
+         if (!title) {
             throw new CustomError(422, "Missing input");
          };
                  
@@ -160,7 +160,7 @@ export class MusicBusiness {
             throw new CustomError(409, "Invalid token");
          }
      
-         const result: any = await this.musicDatabase.getMusicByName(input, isTokenValid.nickname);
+         const result: any = await this.musicDatabase.getMusicByName(title, isTokenValid.nickname);
 
          return result
       } catch (error) {
@@ -169,12 +169,16 @@ export class MusicBusiness {
    };
    
    public async deleteMusicById(
-      input: any,
+      id: any,
       token: string
    ) {
       try {
-         if (!input.id) {
+         if (!id) {
             throw new CustomError(422, "Missing input");
+         };
+
+         if (!token) {
+            throw new CustomError(422, "Missing token");
          };
                           
          const isTokenValid = await this.tokenGenerator.verify(token);
@@ -183,7 +187,7 @@ export class MusicBusiness {
             throw new CustomError(409, "Invalid token");
          }
 
-         await this.musicDatabase.deleteMusicById(input.id, isTokenValid.nickname);
+         await this.musicDatabase.deleteMusicById(id, isTokenValid.nickname);
       } catch (error) {
          throw new CustomError(error.statusCode, error.message);
       };

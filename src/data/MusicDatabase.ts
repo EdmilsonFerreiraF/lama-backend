@@ -97,11 +97,11 @@ export class MusicDatabase extends BaseDatabase {
       };
    };
 
-   public async getMusicByName(input: any, nickname: string): Promise<any> {
+   public async getMusicByName(title: any, nickname: string): Promise<any> {
       try {
          const conn = await BaseDatabase.connection;
          const MusicModel = conn.model('musics2', this.blogSchema);
-         const music = await MusicModel.find({"author": nickname, "title": input.title}, 'id title author').exec();
+         const music = await MusicModel.find({"author": nickname, "title": title}, 'id title author').exec();
 
          return music.map((music: Music) => this.toModel(music));
       } catch (error) {

@@ -159,7 +159,7 @@ describe("Creating documents in MongoDB", () => {
     })
 })
 
-describe("Sign in testing", () => {
+describe.skip("Sign in testing", () => {
     test("Should return missing input when some input data is missing", async() => {
         expect.assertions(2)
         

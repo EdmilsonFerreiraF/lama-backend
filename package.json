@@ -15,7 +15,7 @@
     "scripts": {
         "dev": "ts-node-dev ./src/index.ts",
         "start": "node && ./build/index.js",
-        "test": "jest --runInBand  ./test",
+        "test": "jest --watchAll --runInBand  ./test",
         "test:watch": "jest --watch"
     },
     "devDependencies": {

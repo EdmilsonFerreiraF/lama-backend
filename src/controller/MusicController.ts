@@ -94,12 +94,8 @@ export class MusicController {
          const { title } = req.params;
          const token = req.headers.authorization as string;
 
-         const input: any = {
-            title
-         }
-
          const result: any = await musicBusiness.getMusicByName(
-            input,
+            title,
             token
          );
 
@@ -115,12 +111,8 @@ export class MusicController {
          const { id } = req.params;
          const token: string = req.headers.authorization as string;
 
-         const input: any = {
-            id
-         }
-
          const result: any = await musicBusiness.deleteMusicById(
-            input,
+            id,
             token
          );
 
