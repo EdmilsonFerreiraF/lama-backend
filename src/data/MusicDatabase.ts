@@ -12,14 +12,7 @@ export class MusicDatabase extends BaseDatabase {
       title: String,
       author: String,
       date: Date,
-      file: {
-         fieldname: String,
-         originalname: String,
-         encoding: String,
-         mimetype: String,
-         buffer: Buffer,
-         size: Number,
-     },
+      file: {},
       genre: [],
       album: String
    });
