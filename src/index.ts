@@ -12,6 +12,10 @@ app.use(cors());
 app.use('/user', userRouter);
 app.use('/music', musicRouter);
 
-app.listen(process.env.DB_PORT || 3003, () => {
-    console.log("Servidor rodando na porta 3003");
-})
+let port: any = process.env.PORT;
+
+if (port == null || port == "") {
+  port = 8000;
+}
+
+app.listen(port);

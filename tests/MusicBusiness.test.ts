@@ -29,7 +29,7 @@ const musicDatabase = {
             id: "music_id",
             title: "music_title",
             author: "music_author",
-            date: "01/01/2000",
+            date: new Date(),
             file: {
                 music_file: "music_file"
             },
@@ -54,7 +54,7 @@ const musicDatabase = {
                 id: "music_id",
                 title: "music_title",
                 author: "music_author",
-                date: "01/01/2000",
+                date: new Date(),
                 file: {
                     music_file: "music_file"
                 },
@@ -71,7 +71,7 @@ const musicDatabase = {
                 id: "music_id",
                 title: "music_title",
                 author: "music_author",
-                date: "01/01/2000",
+                date: new Date(),
                 file: {
                     music_file: "music_file"
                 },
@@ -111,7 +111,7 @@ describe("Creating documents in MongoDB", () => {
         expect.assertions(2);
 
         const music = {
-            date: "01/01/2000",
+            date: new Date(),
             file: {
                 music_file: "music_file"
             },
@@ -156,7 +156,7 @@ describe("Creating documents in MongoDB", () => {
 
         const music = {
             title: "music_title",
-            date: "01/01/2000",
+            date: new Date(),
             genre: ["music_genre"],
             album: "music_album"
         };
@@ -176,7 +176,7 @@ describe("Creating documents in MongoDB", () => {
 
         const music = { 
             title: "music_title",
-            date: "01/01/2000",
+            date: new Date(),
             file: {
                 music_file: "music_file"
             },
@@ -198,7 +198,7 @@ describe("Creating documents in MongoDB", () => {
 
         const music = { 
             title: "music_title",
-            date: "01/01/2000",
+            date: new Date(),
             file: {
                 music_file: "music_file"
             },
@@ -218,9 +218,9 @@ describe("Creating documents in MongoDB", () => {
     test("Should return newly created music", async() => {
         expect.assertions(1);
         
-        const music = { 
+        const music: any = { 
             title: "music_title",
-            date: "01/01/2000",
+            date: new Date(),
             file: {
                 music_file: "music_file"
             },
@@ -257,7 +257,7 @@ describe("Testing getAllMusics", () => {
             id: "music_id",
             title: "music_title",
             author: "music_author",
-            date: "01/01/2000",
+            date: new Date(),
             file: {
                 music_file: "music_file"
             },
@@ -358,7 +358,7 @@ describe("Testing getMusicDetailsById", () => {
         const res = await musicBusiness.getMusicDetailsById(id, token)
         expect(res.getId()).toBe("music_id");
         expect(res.getTitle()).toBe("music_title");
-        expect(res.getDate()).toBe("01/01/2000");
+        expect(res.getDate()).toBe(new Date());
         expect(res.getFile()).toStrictEqual({"music_file": "music_file"});
         expect(res.getGenre()).toStrictEqual(["music_genre"]);
         expect(res.getAlbum()).toBe("music_album");

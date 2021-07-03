@@ -34,7 +34,7 @@ export class MusicBusiness {
          
          const id = this.idGenerator.generate();
 
-         const isTokenValid = this.tokenGenerator.verify(token);
+         const isTokenValid = this.tokenGenerator.verify(token.includes("Bearer ") ? token.replace("Bearer ", "") : token);
       
          if (!isTokenValid) {
             throw new CustomError(409, "Invalid token");
@@ -83,7 +83,7 @@ export class MusicBusiness {
             throw new CustomError(422, "Missing token");
          };
          
-         const isTokenValid = this.tokenGenerator.verify(token);
+         const isTokenValid = this.tokenGenerator.verify(token.includes("Bearer ") ? token.replace("Bearer ", "") : token);
          
          if (!isTokenValid) {
             throw new CustomError(409, "Invalid token");
@@ -129,7 +129,7 @@ export class MusicBusiness {
             throw new CustomError(422, "Missing token");
          };
          
-         const isTokenValid = this.tokenGenerator.verify(token);
+         const isTokenValid = this.tokenGenerator.verify(token.includes("Bearer ") ? token.replace("Bearer ", "") : token);
          
          if (!isTokenValid) {
             throw new CustomError(409, "Invalid token");
@@ -154,7 +154,7 @@ export class MusicBusiness {
             throw new CustomError(422, "Missing input");
          };
                  
-         const isTokenValid = await this.tokenGenerator.verify(token);
+         const isTokenValid = this.tokenGenerator.verify(token.includes("Bearer ") ? token.replace("Bearer ", "") : token);
          
          if (!isTokenValid) {
             throw new CustomError(409, "Invalid token");
@@ -181,7 +181,7 @@ export class MusicBusiness {
             throw new CustomError(422, "Missing token");
          };
                           
-         const isTokenValid = await this.tokenGenerator.verify(token);
+         const isTokenValid = this.tokenGenerator.verify(token.includes("Bearer ") ? token.replace("Bearer ", "") : token);
          
          if (!isTokenValid) {
             throw new CustomError(409, "Invalid token");
