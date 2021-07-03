@@ -4,7 +4,7 @@ import * as jwt from "jsonwebtoken";
 dotenv.config();
 
 export class TokenGenerator {
-  private static expiresIn: number = 1200;
+  private static expiresIn: number = Number(process.env.ACCESS_TOKEN_EXPIRES_IN);
 
   public generate = (input: AuthenticationData): string => {
     const newToken = jwt.sign(
