@@ -25,14 +25,7 @@ class MusicDatabase extends BaseDatabase_1.default {
             title: String,
             author: String,
             date: Date,
-            file: {
-                fieldname: String,
-                originalname: String,
-                encoding: String,
-                mimetype: String,
-                buffer: Buffer,
-                size: Number,
-            },
+            file: {},
             genre: [],
             album: String
         });

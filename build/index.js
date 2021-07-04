@@ -13,5 +13,5 @@ app.use(cors_1.default());
 app.use('/user', UserRouter_1.userRouter);
 app.use('/music', MusicRouter_1.musicRouter);
 app.listen(process.env.PORT || 3003, () => {
-    console.log("Servidor rodando na porta 3003");
+    console.log("Server is running on port 3003");
 });
